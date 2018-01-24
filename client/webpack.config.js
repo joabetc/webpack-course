@@ -30,7 +30,12 @@ plugins.push(new webpack.optimize.CommonsChunkPlugin({
     filename: 'vendor.bundle.js'
 }));
 
+let SERVICE_URL = JSON.stringify('http://localhost:3000');
+
 if (process.env.NODE_ENV == 'production') {
+
+    SERVICE_URL = JSON.stringify('http://api-url');
+
     plugins.push(new webpack.optimize.ModuleConcatenationPlugin())
     plugins.push(new babiliPlugin());
     plugins.push(new optimizeCSSAssetsPlugin({
@@ -43,6 +48,10 @@ if (process.env.NODE_ENV == 'production') {
         canPrint: true
     }))
 }
+
+plugins.push(new webpack.DefinePlugin({
+    SERVICE_URL
+}));
 
 module.exports = {
     entry: {
